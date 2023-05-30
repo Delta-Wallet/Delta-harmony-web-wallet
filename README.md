@@ -1,4 +1,4 @@
-# math-harmony-web-wallet
+# delta-harmony-web-wallet
 
 ## Build Setup
 
