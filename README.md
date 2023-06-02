@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #deta-harmony-web-wallet
+=======
+# delta-harmony-web-wallet
+>>>>>>> efb6e0c2bc500d395c8da306550faa9a88058e7f
 
 ## Build Setup
 
