@@ -52,7 +52,7 @@ module.exports = {
   gas_used: 'Gas Used',
   gas_price: 'Gas Price',
   contract: '컨트랙트',
-  mathExtensionLock: 'Math Wallet unlock',
+ detaExtensionLock: 'Math Wallet unlock',
   TRC20_transfer: 'TRC20 이체',
   check_account: '선택된 계정과 현재 계정이 일치하지 않음',
   gas_price_min: 'Gas Price 최소한 1Gwei',

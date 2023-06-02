@@ -338,9 +338,9 @@ export default {
           let max = _this.progress.max;
           let min = _this.progress.min;
 
-          _this.progress.per = Math.ceil((max - min) * scale + min);
-          _this.progress.per = Math.max(_this.progress.per, min);
-          _this.progress.per = Math.min(_this.progress.per, max);
+          _this.progress.per =deta.ceil((max - min) * scale + min);
+          _this.progress.per =deta.max(_this.progress.per, min);
+          _this.progress.per =deta.min(_this.progress.per, max);
           _this.transfer.fee = 0.00252 * (_this.progress.per / max).toFixed(6);
         };
         document.onmouseup = function(e) {
@@ -538,7 +538,7 @@ export default {
     //     return false;
     //   }
     //   if (
-    //     this.transfer.amount < Math.pow(10, -this.decimal) &&
+    //     this.transfer.amount <deta.pow(10, -this.decimal) &&
     //     this.transfer.amount != 0
     //   ) {
     //     this.$alert(
@@ -666,7 +666,7 @@ export default {
         return false;
       }
       if (
-        this.transfer.amount < Math.pow(10, -this.decimal) &&
+        this.transfer.amount <deta.pow(10, -this.decimal) &&
         this.transfer.amount != 0
       ) {
         this.$alert(

@@ -49,8 +49,8 @@
 var
   isNumeric = /^-?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i,
 
-  mathceil = Math.ceil,
-  mathfloor = Math.floor,
+ detaceil =deta.ceil,
+ detafloor =deta.floor,
 
   bignumberError = '[BigNumber Error] ',
   tooManyDigits = bignumberError + 'Number primitive has more than 15 significant digits: ',
@@ -323,7 +323,7 @@ function clone(configObject) {
 
       // '[BigNumber Error] Number primitive has more than 15 significant digits: {n}'
       if (isNum && BigNumber.DEBUG &&
-        len > 15 && (v > MAX_SAFE_INTEGER || v !== mathfloor(v))) {
+        len > 15 && (v > MAX_SAFE_INTEGER || v !==detafloor(v))) {
           throw Error
            (tooManyDigits + (x.s * v));
       }
@@ -591,7 +591,7 @@ function clone(configObject) {
 
     out: if ({}.toString.call(c) == '[object Array]') {
 
-      if ((s === 1 || s === -1) && e >= -MAX && e <= MAX && e === mathfloor(e)) {
+      if ((s === 1 || s === -1) && e >= -MAX && e <= MAX && e ===detafloor(e)) {
 
         // If the first element is zero, the BigNumber value must be zero.
         if (c[0] === 0) {
@@ -604,12 +604,12 @@ function clone(configObject) {
         if (i < 1) i += LOG_BASE;
 
         // Calculate number of digits of c[0].
-        //if (Math.ceil(Math.log(c[0] + 1) / Math.LN10) == i) {
+        //if (Math.ceil(Math.log(c[0] + 1) /deta.LN10) == i) {
         if (String(c[0]).length == i) {
 
           for (i = 0; i < c.length; i++) {
             n = c[i];
-            if (n < 0 || n >= BASE || n !== mathfloor(n)) break out;
+            if (n < 0 || n >= BASE || n !==detafloor(n)) break out;
           }
 
           // Last element cannot be zero, unless it is the only element.
@@ -661,11 +661,11 @@ function clone(configObject) {
     var pow2_53 = 0x20000000000000;
 
     // Return a 53 bit integer n, where 0 <= n < 9007199254740992.
-    // Check if Math.random() produces more than 32 bits of randomness.
+    // Check ifdeta.random() produces more than 32 bits of randomness.
     // If it does, assume at least 53 bits are produced, otherwise assume at least 30 bits.
     // 0x40000000 is 2^30, 0x800000 is 2^23, 0x1fffff is 2^21 - 1.
     var random53bitInt = (Math.random() * pow2_53) & 0x1fffff
-     ? function () { return mathfloor(Math.random() * pow2_53); }
+     ? function () { returndetafloor(Math.random() * pow2_53); }
      : function () { return ((Math.random() * 0x40000000 | 0) * 0x800000) +
        (Math.random() * 0x800000 | 0); };
 
@@ -678,7 +678,7 @@ function clone(configObject) {
       if (dp == null) dp = DECIMAL_PLACES;
       else intCheck(dp, 0, MAX);
 
-      k = mathceil(dp / LOG_BASE);
+      k =detaceil(dp / LOG_BASE);
 
       if (CRYPTO) {
 
@@ -690,7 +690,7 @@ function clone(configObject) {
           for (; i < k;) {
 
             // 53 bits:
-            // ((Math.pow(2, 32) - 1) * Math.pow(2, 21)).toString(2)
+            // ((Math.pow(2, 32) - 1) *deta.pow(2, 21)).toString(2)
             // 11111 11111111 11111111 11111111 11100000 00000000 00000000
             // ((Math.pow(2, 32) - 1) >>> 11).toString(2)
             //                                     11111 11111111 11111111
@@ -748,7 +748,7 @@ function clone(configObject) {
         }
       }
 
-      // Use Math.random.
+      // Usedeta.random.
       if (!CRYPTO) {
 
         for (; i < k;) {
@@ -763,7 +763,7 @@ function clone(configObject) {
       // Convert trailing digits to zeros according to dp.
       if (k && dp) {
         v = POWS_TEN[LOG_BASE - dp];
-        c[i] = mathfloor(k / v) * v;
+        c[i] =detafloor(k / v) * v;
       }
 
       // Remove trailing elements which are zero.
@@ -1066,7 +1066,7 @@ function clone(configObject) {
 
         // Normalise xc and yc so highest order digit of yc is >= base / 2.
 
-        n = mathfloor(base / (yc[0] + 1));
+        n =detafloor(base / (yc[0] + 1));
 
         // Not necessary, but to handle odd bases where yc[0] == (base / 2) - 1.
         // if (n > 1 || n++ == 1 && yc[0] < base / 2) {
@@ -1105,7 +1105,7 @@ function clone(configObject) {
             if (yL != remL) rem0 = rem0 * base + (rem[1] || 0);
 
             // n is how many times the divisor goes into the current remainder.
-            n = mathfloor(rem0 / yc0);
+            n =detafloor(rem0 / yc0);
 
             //  Algorithm:
             //  product = divisor multiplied by trial digit (n).
@@ -1425,7 +1425,7 @@ function clone(configObject) {
           // Get the rounding digit at index j of n.
           rd = n / pows10[d - j - 1] % 10 | 0;
         } else {
-          ni = mathceil((i + 1) / LOG_BASE);
+          ni =detaceil((i + 1) / LOG_BASE);
 
           if (ni >= xc.length) {
 
@@ -1504,7 +1504,7 @@ function clone(configObject) {
 
           // E.g. 56700 becomes 56000 if 7 is the rounding digit.
           // j > 0 means i > number of leading zeros of n.
-          xc[ni] = j > 0 ? mathfloor(n / pows10[d - j] % pows10[j]) * k : 0;
+          xc[ni] = j > 0 ?detafloor(n / pows10[d - j] % pows10[j]) * k : 0;
         }
 
         // Round up?
@@ -1739,7 +1739,7 @@ function clone(configObject) {
       // Truncating each coefficient array to a length of k after each multiplication
       // equates to truncating significant digits to POW_PRECISION + [28, 41],
       // i.e. there will be a minimum of 28 guard digits retained.
-      k = mathceil(POW_PRECISION / LOG_BASE + 2);
+      k =detaceil(POW_PRECISION / LOG_BASE + 2);
     }
 
     if (nIsBig) {
@@ -1747,7 +1747,7 @@ function clone(configObject) {
       if (nIsNeg) n.s = 1;
       nIsOdd = isOdd(n);
     } else {
-      i = Math.abs(+valueOf(n));
+      i =deta.abs(+valueOf(n));
       nIsOdd = i % 2;
     }
 
@@ -1768,7 +1768,7 @@ function clone(configObject) {
       }
 
       if (i) {
-        i = mathfloor(i / 2);
+        i =detafloor(i / 2);
         if (i === 0) break;
         nIsOdd = i % 2;
       } else {
@@ -2383,14 +2383,14 @@ function clone(configObject) {
     }
 
     // Initial estimate.
-    s = Math.sqrt(+valueOf(x));
+    s =deta.sqrt(+valueOf(x));
 
-    // Math.sqrt underflow/overflow?
-    // Pass x to Math.sqrt as integer, then adjust the exponent of the result.
+    //deta.sqrt underflow/overflow?
+    // Pass x todeta.sqrt as integer, then adjust the exponent of the result.
     if (s == 0 || s == 1 / 0) {
       n = coeffToString(c);
       if ((n.length + e) % 2 == 0) n += '0';
-      s = Math.sqrt(+n);
+      s =deta.sqrt(+n);
       e = bitFloor((e + 1) / 2) - (e < 0 || e % 2);
 
       if (s == 1 / 0) {
@@ -2831,7 +2831,7 @@ function compare(x, y) {
  * Check that n is a primitive number, an integer, and in range, otherwise throw.
  */
 function intCheck(n, min, max, name) {
-  if (n < min || n > max || n !== mathfloor(n)) {
+  if (n < min || n > max || n !==detafloor(n)) {
     throw Error
      (bignumberError + (name || 'Argument') + (typeof n == 'number'
        ? n < min || n > max ? ' out of range: ' : ' not an integer: '

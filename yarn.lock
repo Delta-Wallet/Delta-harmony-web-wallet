@@ -5983,7 +5983,7 @@ reduce-css-calc@^1.2.6:
   integrity sha1-dHyRTgSWFKTJz7umKYca0dKSdxY=
   dependencies:
     balanced-match "^0.4.2"
-    math-expression-evaluator "^1.2.14"
+   deta-expression-evaluator "^1.2.14"
     reduce-function-call "^1.0.1"
 
 reduce-function-call@^1.0.1:
